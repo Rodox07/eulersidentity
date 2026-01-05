@@ -2,8 +2,8 @@ backend:
   name: git-gateway
   branch: main
 
-media_folder: "assets/uploads"
-public_folder: "/assets/uploads"
+media_folder: "media/uploads"
+public_folder: "/media/uploads"
 
 locale: "es"
 
@@ -30,12 +30,12 @@ collections:
               - { label: "Contenido", name: "contenido", widget: "markdown" }
               - { label: "Publicado", name: "publicado", widget: "boolean", default: true }
 
-  - name: "discos"
+  - name: "records"
     label: "Discos"
     files:
-      - name: "discos"
+      - name: "records"
         label: "Discos (lista)"
-        file: "data/discos.json"
+        file: "data/records.json"
         format: "json"
         fields:
           - label: "Items"
@@ -65,12 +65,24 @@ collections:
           - label: "Items"
             name: "items"
             widget: "list"
-            summary: "{{fields.fecha}} — {{fields.titulo}}"
+            summary: "{{fields.date}} — {{fields.title}}"
             fields:
-              - { label: "Título", name: "titulo", widget: "string" }
-              - { label: "Fecha", name: "fecha", widget: "datetime", format: "YYYY-MM-DD", time_format: false, required: false }
+              - { label: "Título", name: "title", widget: "string" }
+              - { label: "Fecha", name: "date", widget: "datetime", format: "YYYY-MM-DD", time_format: false }
               - { label: "Tags", name: "tags", widget: "list", required: false }
-              - { label: "Miniatura", name: "poster", widget: "image", required: false }
-              - { label: "MP4 (opcional)", name: "mp4", widget: "file", required: false }
-              - { label: "Embed URL (opcional)", name: "embed", widget: "string", required: false, hint: "YouTube/Vimeo/etc" }
-              - { label: "Descripción", name: "descripcion", widget: "text", required: false }
+
+              - label: "Archivo MP4"
+                name: "src"
+                widget: "file"
+                media_folder: "media/videos"
+                public_folder: "/media/videos"
+
+              - label: "Poster (thumbnail)"
+                name: "poster"
+                widget: "image"
+                media_folder: "media/posters"
+                public_folder: "/media/posters"
+                required: false
+
+              - { label: "Descripción", name: "desc", widget: "text", required: false }
+              - { label: "Publicado", name: "publicado", widget: "boolean", default: true }
