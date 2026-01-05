@@ -5,38 +5,101 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="robots" content="noindex" />
   <title>RodoBlog — Auth</title>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+  <!-- ✅ CLAVE: defer para que NO intente tocar document.body antes de tiempo -->
+  <script defer src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
   <style>
-    body{font-family:Tahoma,Arial,sans-serif; padding:20px}
-    .box{max-width:520px;margin:40px auto;border:1px solid #999;padding:14px;border-radius:10px}
+    body{font-family:Tahoma,Arial,sans-serif; padding:20px; background:#fff}
+    .box{max-width:560px;margin:60px auto;border:1px solid #aaa;padding:16px 18px;border-radius:12px}
+    .row{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
+    button{cursor:pointer; padding:10px 12px; border:1px solid #666; border-radius:10px; background:#f3f3f3}
+    button:hover{background:#eaeaea}
+    .muted{color:#555; font-size:13px; margin-top:10px}
+    code{background:#f4f4f4; padding:2px 6px; border-radius:6px}
   </style>
 </head>
+
 <body>
   <div class="box">
-    <h3>Procesando acceso…</h3>
-    <p>Si no aparece nada, espera 2–3 segundos.</p>
+    <h3 id="title">Procesando acceso…</h3>
+    <div class="muted" id="status">Si no aparece nada en 2–3 segundos, usa el botón.</div>
+
+    <div class="row">
+      <button id="btnOpen">Abrir login</button>
+      <button id="btnAdmin">Ir a /admin</button>
+    </div>
+
+    <div class="muted">
+      Tip: si estás reseteando contraseña, la URL suele traer <code>#recovery_token=...</code>.
+    </div>
   </div>
 
   <script>
-    (function () {
-      if (!window.netlifyIdentity) return;
+    function hasRecoveryToken() {
+      const h = window.location.hash || "";
+      const q = window.location.search || "";
+      return h.includes("recovery_token=") || q.includes("recovery_token=");
+    }
 
-      window.netlifyIdentity.on("init", () => {
+    function openIdentity() {
+      if (!window.netlifyIdentity) return false;
+      try {
+        // Con token de recovery, normalmente el widget lo detecta al abrir
         window.netlifyIdentity.open();
+        return true;
+      } catch(e) {
+        return false;
+      }
+    }
+
+    function setText(t, s) {
+      document.getElementById("title").textContent = t;
+      document.getElementById("status").textContent = s;
+    }
+
+    window.addEventListener("load", () => {
+      const btnOpen = document.getElementById("btnOpen");
+      const btnAdmin = document.getElementById("btnAdmin");
+
+      btnAdmin.addEventListener("click", () => (window.location.href = "/admin/"));
+      btnOpen.addEventListener("click", () => {
+        const ok = openIdentity();
+        if (!ok) setText("No se cargó el widget", "Revisa si un bloqueador (uBlock) está bloqueando identity.netlify.com o entra por /admin.");
       });
 
-      window.netlifyIdentity.init();
+      // Espera corta a que cargue el script (por si tarda)
+      let tries = 0;
+      const iv = setInterval(() => {
+        tries++;
 
-      // fallback
-      setTimeout(() => {
-        try { window.netlifyIdentity.open(); } catch(e){}
-      }, 600);
+        if (window.netlifyIdentity) {
+          clearInterval(iv);
 
-      // si se loguea, redirige al admin
-      window.netlifyIdentity.on("login", () => {
-        window.location.href = "/admin/";
-      });
-    })();
+          window.netlifyIdentity.on("init", user => {
+            if (user) {
+              setText("Sesión activa", "Ya estás logueado. Te mando a /admin…");
+              window.location.href = "/admin/";
+              return;
+            }
+            setText("Abriendo login…", hasRecoveryToken()
+              ? "Detecté recovery token. Abriendo ventana de recuperación…"
+              : "Abriendo ventana de login…"
+            );
+            openIdentity();
+          });
+
+          window.netlifyIdentity.on("login", () => (window.location.href = "/admin/"));
+          window.netlifyIdentity.init();
+          return;
+        }
+
+        if (tries === 12) { // ~3s
+          clearInterval(iv);
+          setText("No se abrió nada", "Pulsa “Abrir login”. Si no funciona, desactiva bloqueadores para este sitio o entra por /admin.");
+        }
+      }, 250);
+    });
   </script>
 </body>
 </html>
