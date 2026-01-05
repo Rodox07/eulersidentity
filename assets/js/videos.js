@@ -1,7 +1,7 @@
 // js/videos.js
 import { loadPosts, renderPostsSidebar } from "./posts.js";
 
-const VIDEOS_URL = new URL("../assets/data/videos.json", import.meta.url);
+const POSTS_URL = "/assets/data/videos.json";
 
 function esc(s=""){return String(s).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#39;");}
 
@@ -126,3 +126,4 @@ export async function renderVideos({ mainEl, asideEl }) {
   ordEl.addEventListener("change", apply);
   apply();
 }
+
