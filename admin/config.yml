@@ -21,16 +21,16 @@ collections:
             widget: "list"
             summary: "{{fields.fecha}} — {{fields.titulo}}"
             fields:
-              - { label: "Publicado", name: "publicado", widget: "boolean", default: true }
               - { label: "Título", name: "titulo", widget: "string" }
-              - { label: "Slug", name: "slug", widget: "string", hint: "ej: tengo-sueno" }
+              - { label: "Slug", name: "slug", widget: "string" }
               - { label: "Fecha", name: "fecha", widget: "datetime", format: "YYYY-MM-DD", time_format: false }
               - { label: "Tags", name: "tags", widget: "list", required: false }
               - { label: "Portada", name: "portada", widget: "image", required: false }
               - { label: "Resumen", name: "resumen", widget: "text", required: false }
               - { label: "Contenido", name: "contenido", widget: "markdown" }
+              - { label: "Publicado", name: "publicado", widget: "boolean", default: true }
 
-  - name: "discos"
+  - name: "records"
     label: "Discos"
     files:
       - name: "records"
@@ -67,22 +67,10 @@ collections:
             widget: "list"
             summary: "{{fields.date}} — {{fields.title}}"
             fields:
-              - { label: "Publicado", name: "publicado", widget: "boolean", default: true }
               - { label: "Título", name: "title", widget: "string" }
               - { label: "Fecha", name: "date", widget: "datetime", format: "YYYY-MM-DD", time_format: false }
               - { label: "Tags", name: "tags", widget: "list", required: false }
-
-              - label: "Archivo MP4"
-                name: "src"
-                widget: "file"
-                media_folder: "media/videos"
-                public_folder: "/media/videos"
-
-              - label: "Poster (thumbnail)"
-                name: "poster"
-                widget: "image"
-                media_folder: "media/posters"
-                public_folder: "/media/posters"
-                required: false
-
+              - { label: "Archivo MP4", name: "src", widget: "file" }
+              - { label: "Poster", name: "poster", widget: "image", required: false }
               - { label: "Descripción", name: "desc", widget: "text", required: false }
+              - { label: "Publicado", name: "publicado", widget: "boolean", default: true }
