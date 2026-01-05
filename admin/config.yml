@@ -2,57 +2,75 @@ backend:
   name: git-gateway
   branch: main
 
-media_folder: "assets/media"
-public_folder: "/assets/media"
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+locale: "es"
 
 collections:
   - name: "posts"
     label: "Posts"
-    folder: "content/posts"
-    create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    extension: "md"
-    format: "frontmatter"
-    fields:
-      - { label: "Título", name: "title", widget: "string" }
-      - { label: "Fecha", name: "date", widget: "datetime", format: "YYYY-MM-DD", time_format: false }
-      - { label: "Bajada (lede)", name: "lede", widget: "string", required: false }
-      - { label: "Tags", name: "tags", widget: "list", required: false }
-      - { label: "Portada", name: "cover", widget: "image", required: false }
-      - { label: "Alt portada", name: "coverAlt", widget: "string", required: false }
-      - { label: "Contenido", name: "body", widget: "markdown" }
+    files:
+      - name: "posts"
+        label: "Posts (lista)"
+        file: "data/posts.json"
+        format: "json"
+        fields:
+          - label: "Items"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.fecha}} — {{fields.titulo}}"
+            fields:
+              - { label: "Título", name: "titulo", widget: "string" }
+              - { label: "Slug", name: "slug", widget: "string", hint: "ej: tengo-sueno" }
+              - { label: "Fecha", name: "fecha", widget: "datetime", format: "YYYY-MM-DD", time_format: false }
+              - { label: "Tags", name: "tags", widget: "list", required: false }
+              - { label: "Portada", name: "portada", widget: "image", required: false }
+              - { label: "Resumen", name: "resumen", widget: "text", required: false }
+              - { label: "Contenido", name: "contenido", widget: "markdown" }
+              - { label: "Publicado", name: "publicado", widget: "boolean", default: true }
+
+  - name: "discos"
+    label: "Discos"
+    files:
+      - name: "discos"
+        label: "Discos (lista)"
+        file: "data/discos.json"
+        format: "json"
+        fields:
+          - label: "Items"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.artista}} — {{fields.album}}"
+            fields:
+              - { label: "Álbum", name: "album", widget: "string" }
+              - { label: "Artista", name: "artista", widget: "string" }
+              - { label: "Año", name: "anio", widget: "number", value_type: "int", required: false }
+              - { label: "Género", name: "genero", widget: "string", required: false }
+              - { label: "Portada", name: "cover", widget: "image", required: false }
+              - { label: "Nota (0–10)", name: "nota", widget: "number", min: 0, max: 10, value_type: "int" }
+              - { label: "Escuchado", name: "escuchado", widget: "datetime", format: "YYYY-MM-DD", time_format: false, required: false }
+              - { label: "Chips", name: "chips", widget: "list", required: false }
+              - { label: "Tags", name: "tags", widget: "list", required: false }
+              - { label: "Notas", name: "notas", widget: "text", required: false }
 
   - name: "videos"
     label: "Videos"
-    folder: "content/videos"
-    create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    extension: "md"
-    format: "frontmatter"
-    fields:
-      - { label: "Título", name: "title", widget: "string" }
-      - { label: "Fecha", name: "date", widget: "datetime", format: "YYYY-MM-DD", time_format: false }
-      - { label: "Tags", name: "tags", widget: "list", required: false }
-      - { label: "Portada", name: "cover", widget: "image", required: false }
-      - { label: "Tipo", name: "type", widget: "select", options: ["youtube", "mp4"], default: "youtube" }
-      - { label: "YouTube ID (si type=youtube)", name: "youtubeId", widget: "string", required: false }
-      - { label: "MP4 (si type=mp4)", name: "mp4", widget: "file", required: false }
-      - { label: "Notas", name: "body", widget: "markdown", required: false }
-
-  - name: "records"
-    label: "Discos"
-    folder: "content/records"
-    create: true
-    slug: "{{slug}}"
-    extension: "json"
-    format: "json"
-    fields:
-      - { label: "Artista", name: "artist", widget: "string" }
-      - { label: "Álbum", name: "title", widget: "string" }
-      - { label: "Año", name: "year", widget: "string", required: false }
-      - { label: "Escuchado (YYYY-MM-DD)", name: "listened", widget: "datetime", format: "YYYY-MM-DD", time_format: false, required: false }
-      - { label: "Rating (0-10)", name: "rating", widget: "number", value_type: "float", min: 0, max: 10, required: false }
-      - { label: "Cover", name: "cover", widget: "image", required: false }
-      - { label: "Géneros", name: "genres", widget: "list", required: false }
-      - { label: "Tags", name: "tags", widget: "list", required: false }
-      - { label: "Notas", name: "notes", widget: "text", required: false }
+    files:
+      - name: "videos"
+        label: "Videos (lista)"
+        file: "data/videos.json"
+        format: "json"
+        fields:
+          - label: "Items"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.fecha}} — {{fields.titulo}}"
+            fields:
+              - { label: "Título", name: "titulo", widget: "string" }
+              - { label: "Fecha", name: "fecha", widget: "datetime", format: "YYYY-MM-DD", time_format: false, required: false }
+              - { label: "Tags", name: "tags", widget: "list", required: false }
+              - { label: "Miniatura", name: "poster", widget: "image", required: false }
+              - { label: "MP4 (opcional)", name: "mp4", widget: "file", required: false }
+              - { label: "Embed URL (opcional)", name: "embed", widget: "string", required: false, hint: "YouTube/Vimeo/etc" }
+              - { label: "Descripción", name: "descripcion", widget: "text", required: false }
