@@ -21,6 +21,7 @@ collections:
             widget: "list"
             summary: "{{fields.fecha}} — {{fields.titulo}}"
             fields:
+              - { label: "Publicado", name: "publicado", widget: "boolean", default: true }
               - { label: "Título", name: "titulo", widget: "string" }
               - { label: "Slug", name: "slug", widget: "string", hint: "ej: tengo-sueno" }
               - { label: "Fecha", name: "fecha", widget: "datetime", format: "YYYY-MM-DD", time_format: false }
@@ -28,9 +29,8 @@ collections:
               - { label: "Portada", name: "portada", widget: "image", required: false }
               - { label: "Resumen", name: "resumen", widget: "text", required: false }
               - { label: "Contenido", name: "contenido", widget: "markdown" }
-              - { label: "Publicado", name: "publicado", widget: "boolean", default: true }
 
-  - name: "records"
+  - name: "discos"
     label: "Discos"
     files:
       - name: "records"
@@ -67,6 +67,7 @@ collections:
             widget: "list"
             summary: "{{fields.date}} — {{fields.title}}"
             fields:
+              - { label: "Publicado", name: "publicado", widget: "boolean", default: true }
               - { label: "Título", name: "title", widget: "string" }
               - { label: "Fecha", name: "date", widget: "datetime", format: "YYYY-MM-DD", time_format: false }
               - { label: "Tags", name: "tags", widget: "list", required: false }
@@ -85,4 +86,3 @@ collections:
                 required: false
 
               - { label: "Descripción", name: "desc", widget: "text", required: false }
-              - { label: "Publicado", name: "publicado", widget: "boolean", default: true }
