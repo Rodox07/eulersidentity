@@ -51,15 +51,29 @@ function mdToHtml(md = "") {
   return out.join("\n");
 }
 
-async function fetchJSON(urlObj) {
-  const url = new URL(urlObj);
-  // cache-bust para Netlify/CDN mientras pruebas
+async function fetchJSON(urlLike) {
+  // Soporta "/ruta", "ruta/relativa" y "https://..."
+  const url = new URL(String(urlLike), window.location.origin);
+
+  // cache-bust mientras pruebas en Netlify
   url.searchParams.set("v", Date.now().toString());
 
   const res = await fetch(url.toString(), { cache: "no-store" });
+
+  // Debug útil: si te llega HTML (redirect/404), lo verás aquí
+  const text = await res.text();
   if (!res.ok) throw new Error(`No pude cargar ${url.pathname} (${res.status})`);
-  return res.json();
+
+  try {
+    return JSON.parse(text);
+  } catch {
+    throw new Error(
+      `La respuesta NO es JSON desde ${url.pathname}. ` +
+      `Primeros chars: ${text.slice(0, 80).replace(/\s+/g, " ")}`
+    );
+  }
 }
+
 
 function normalizeSlug(s = "") {
   return String(s).trim().toLowerCase();
@@ -274,4 +288,5 @@ export async function renderPostDetail({ mainEl, asideEl }, slugRaw) {
     <a href="#/">← Volver a Posts</a>
   `;
 }
+
 
