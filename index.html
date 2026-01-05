@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="es" class="classic">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light" />
+  <title>RodoBlog</title>
+
+  <link rel="stylesheet" href="./assets/css/styles.css" />
+
+  <!-- MathJax (LaTeX) -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(','\\)'], ['$', '$']],
+        displayMath: [['\\[','\\]'], ['$$','$$']],
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      
+      <div class="bar">
+        <div class="brand">
+          <p class="title">RodoBlog     </p>
+          <p class="subtitle">Un espacio para hablar sobre cosas que me gustan</p>
+        </div>
+          
+        <nav>
+          <a class="navlink" href="#/">Inicio</a>
+          <a class="navlink" href="#/projects">Proyectos</a>
+          <a class="navlink" href="#/discos">Discos</a>
+          <a class="navlink" href="#/about">Acerca</a>
+          
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="panel">
+        <div class="content" id="view"></div>
+      </section>
+
+      <aside class="panel">
+        <div class="content">
+          <p class="side-title">Barra de busqueda :3</p>
+
+          <div class="field">
+            <label for="q">Buscar en posts</label>
+            <input id="q" type="search" placeholder="palabras, título, tags…" autocomplete="off" />
+          </div>
+
+          <div class="field">
+            <label for="tagFilter">Filtrar por tag</label>
+            <select id="tagFilter">
+              <option value="">(todos)</option>
+            </select>
+          </div>
+
+          <div class="btnrow">
+            <button id="clearFilters">Limpiar</button>
+            <button id="randomPost">Azar</button>
+          </div>
+
+          <div class="hr"></div>
+
+          <p class="side-title">Yo 𐔌՞ ܸ.ˬ.ܸ՞𐦯</p>
+          <div class="hint">
+            <span class="badge">Correo</span> rodolfo.galaz@pregrado.uoh.cl<br/>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      <span class="muted">©</span> Rodolfo Galaz —
+      <span class="muted">“Los sentimientos humanos no pueden desaparecer. Los sentimientos aparecen en cualquier momento, cuando menos te lo esperas”</span>
+    </footer>
+  </div>
+
+  <script type="module" src="./assets/js/app.js"></script>
+</body>
+</html>
+
