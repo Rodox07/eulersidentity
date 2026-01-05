@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>RodoBlog — Auth</title>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <style>
+    body{font-family:Tahoma,Arial,sans-serif; padding:20px}
+    .box{max-width:520px;margin:40px auto;border:1px solid #999;padding:14px;border-radius:10px}
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h3>Procesando acceso…</h3>
+    <p>Si no aparece nada, espera 2–3 segundos.</p>
+  </div>
+
+  <script>
+    (function () {
+      if (!window.netlifyIdentity) return;
+
+      window.netlifyIdentity.on("init", () => {
+        window.netlifyIdentity.open();
+      });
+
+      window.netlifyIdentity.init();
+
+      // fallback
+      setTimeout(() => {
+        try { window.netlifyIdentity.open(); } catch(e){}
+      }, 600);
+
+      // si se loguea, redirige al admin
+      window.netlifyIdentity.on("login", () => {
+        window.location.href = "/admin/";
+      });
+    })();
+  </script>
+</body>
+</html>
