@@ -1,5 +1,13 @@
-import { POSTS } from "./posts.js";
-import { RECORDS } from "./records.js";
+let POSTS = [];
+let RECORDS = [];
+let VIDEOS = [];
+
+async function loadJson(url){
+  const res = await fetch(url, { cache: "no-store" });
+  if (!res.ok) throw new Error(`No pude cargar ${url}`);
+  return res.json();
+}
+
 
 
 /* -----------------------------
@@ -537,8 +545,16 @@ randomPostBtn.addEventListener("click", ()=>{
 window.addEventListener("hashchange", route);
 
 /* init */
-fillTagSelect(uniqueTags(POSTS), "");
-route();
-setTimeout(() => typesetMath(view), 0);
+(async function boot(){
+  [POSTS, RECORDS, VIDEOS] = await Promise.all([
+    loadJson("./assets/data/posts.json"),
+    loadJson("./assets/data/records.json"),
+    loadJson("./assets/data/videos.json"),
+  ]);
+
+  fillTagSelect(uniqueTags(POSTS), "");
+  route();
+  setTimeout(() => typesetMath(view), 0);
+})();
 
 
