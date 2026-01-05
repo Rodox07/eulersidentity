@@ -13,7 +13,7 @@ collections:
     files:
       - name: "posts"
         label: "Posts (lista)"
-        file: "data/posts.json"
+        file: "assets/data/posts.json"
         format: "json"
         fields:
           - label: "Items"
@@ -35,7 +35,7 @@ collections:
     files:
       - name: "records"
         label: "Discos (lista)"
-        file: "data/records.json"
+        file: "assets/data/records.json"
         format: "json"
         fields:
           - label: "Items"
@@ -59,7 +59,7 @@ collections:
     files:
       - name: "videos"
         label: "Videos (lista)"
-        file: "data/videos.json"
+        file: "assets/data/videos.json"
         format: "json"
         fields:
           - label: "Items"
