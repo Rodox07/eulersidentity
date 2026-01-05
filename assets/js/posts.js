@@ -1,5 +1,5 @@
 // js/posts.js
-const POSTS_URL = new URL("../assets/data/posts.json", import.meta.url);
+const POSTS_URL = "/assets/data/posts.json";
 
 // -------- helpers --------
 function esc(s = "") {
@@ -274,3 +274,4 @@ export async function renderPostDetail({ mainEl, asideEl }, slugRaw) {
     <a href="#/">← Volver a Posts</a>
   `;
 }
+
