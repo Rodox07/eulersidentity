@@ -1,0 +1,598 @@
+/* =========================================================
+   RodoBlog — CLASSIC WEB 2000s (fansite / blog retro)
+   Mantiene tu HTML/JS actual. Estilo pastel, bevel, layout fijo.
+   Activa con: <html class="classic">
+   ========================================================= */
+
+/* --------- Tokens --------- */
+:root{
+  --site-w: 920px;
+  --sidebar-w: 260px;
+  --pad: 14px;
+
+  /* Pastel base (mint/green) */
+  --page: #dfecc9;
+  --page2:#cfe2b4;
+
+  /* Caja */
+  --box:  #f3f9e6;
+  --box2: #eaf4d7;
+  --bar:  #c9d7b1;
+  --bar2: #b9caa1;
+
+  /* Bordes tipo 2000s */
+  --b1: #7d8a70;     /* borde oscuro */
+  --b2: #ffffff;     /* highlight */
+  --b3: #c7d3b1;     /* inner */
+  --shadow: rgba(0,0,0,.12);
+
+  /* Texto */
+  --ink: #2f352b;
+  --muted:#5c6650;
+  --link:#2b6a9a;
+  --link2:#1f4f74;
+
+  /* UI */
+  --ui: #e7eed6;
+  --ui2:#d7e3bf;
+  --uiBorder:#88957d;
+  --radius: 16px;
+  --radius2: 22px;
+
+  --font: Tahoma, Verdana, Arial, sans-serif;
+  --mono: "Lucida Console", "Courier New", monospace;
+}
+
+/* --------- Base --------- */
+*{ box-sizing:border-box; }
+
+html{
+  min-height: 100%;
+  background: var(--page);
+  color-scheme: light;
+}
+
+/* Patrón suave “web vieja” (puntitos) */
+html.classic{
+  background:
+    radial-gradient(circle at 1px 1px, rgba(0,0,0,.07) 1px, transparent 1.6px),
+    linear-gradient(180deg, var(--page), var(--page2));
+  background-size: 12px 12px, auto;
+  background-attachment: fixed;
+}
+
+body{
+  margin:0;
+  min-height: 100vh;
+  font-family: var(--font);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink);
+  background: transparent;
+}
+
+a{ color: var(--link); text-decoration: underline; }
+a:hover{ color: var(--link2); }
+a:visited{ color: #5b4da6; }
+
+/* --------- Layout centrado --------- */
+.wrap{
+  width: min(var(--site-w), calc(100% - 24px));
+  margin: 18px auto;
+}
+
+/* Header “clásico”: sin sticky, sin blur */
+header{
+  position: static;
+  border-radius: var(--radius2) var(--radius2) 14px 14px;
+  overflow: hidden;
+
+  /* marco bevel */
+  border: 1px solid var(--b1);
+  box-shadow: 0 6px 18px var(--shadow);
+  background: var(--box);
+}
+
+/* Barra superior tipo “banner” suave */
+.bar{
+  padding: 14px var(--pad) 10px;
+  background:
+    linear-gradient(180deg, #ffffff, var(--box2));
+  border-bottom: 1px solid var(--b3);
+}
+
+/* Brand centrado como sitios viejos */
+.brand{
+  text-align: center;
+  margin-bottom: 10px;
+}
+.brand .title{
+  margin:0;
+  font-size: 28px;
+  letter-spacing: 6px;
+  font-weight: normal;
+}
+.brand .subtitle{
+  margin:6px 0 0;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+/* Nav como “tabs” clásicos */
+nav{
+  display:flex;
+  justify-content:center;
+  gap: 10px;
+  flex-wrap:wrap;
+  padding: 8px 0 2px;
+}
+.navlink{
+  display:inline-block;
+  padding: 6px 10px;
+  text-decoration:none;
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 12px;
+
+  background: linear-gradient(180deg, #ffffff, var(--ui));
+  border: 1px solid var(--uiBorder);
+
+  /* bevel */
+  box-shadow:
+    inset 1px 1px 0 var(--b2),
+    inset -1px -1px 0 rgba(0,0,0,.10);
+  border-radius: 12px;
+}
+.navlink:hover{
+  background: linear-gradient(180deg, #ffffff, var(--ui2));
+}
+.navlink.active{
+  background: linear-gradient(180deg, #fff7d6, #f1e3b2);
+  border-color: #9f8f55;
+}
+
+/* Main 2 columnas estilo 2000s */
+main{
+  display: grid;
+  grid-template-columns: 1fr var(--sidebar-w);
+  gap: 14px;
+  margin-top: 14px;
+}
+
+/* Mobile: 1 columna */
+@media (max-width: 920px){
+  main{ grid-template-columns: 1fr; }
+  aside{ order: 2; }
+}
+
+/* --------- Panel estilo “caja vieja” --------- */
+.panel{
+  background: var(--box);
+  border: 1px solid var(--b1);
+  border-radius: 14px;
+  box-shadow: 0 6px 18px var(--shadow);
+
+  /* bevel: borde interno clarito */
+  position: relative;
+}
+.panel::before{
+  content:"";
+  position:absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events:none;
+  box-shadow: inset 1px 1px 0 var(--b2), inset -1px -1px 0 rgba(0,0,0,.08);
+}
+
+/* “inner frame” */
+.content{
+  padding: 12px var(--pad);
+  position: relative;
+}
+
+/* Quitar sticky moderno del sidebar */
+/* aside.panel{
+  position: static !important;
+  top: auto !important;
+  height: auto !important;
+  align-self: auto !important;
+} */
+
+/* --------- Barras/headers dentro de cajas (como tus imágenes) --------- */
+h1, h2, h3{
+  margin: 0 0 10px;
+  font-weight: normal;
+}
+
+/* H1 tipo “strip” (no gigante moderno) */
+h1{
+  font-size: 14px;
+  font-family: var(--mono);
+  background: linear-gradient(180deg, var(--bar), var(--bar2));
+  border: 1px solid var(--b1);
+  box-shadow: inset 1px 1px 0 var(--b2);
+  padding: 6px 10px;
+  border-radius: 10px;
+  letter-spacing: .6px;
+}
+
+/* Lede más simple */
+.lede{
+  margin: 8px 0 12px;
+  color: var(--muted);
+}
+
+/* Divider clásico simple */
+.divider{
+  margin: 10px 0 14px;
+  border-top: 1px dashed rgba(0,0,0,.22);
+  height: 0;
+}
+
+/* Meta/badges */
+.meta{
+  display:flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items:center;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+.badge{
+  display:inline-block;
+  padding: 3px 8px;
+  border: 1px solid var(--uiBorder);
+  background: linear-gradient(180deg, #ffffff, var(--ui));
+  border-radius: 10px;
+  box-shadow: inset 1px 1px 0 var(--b2);
+  color: var(--ink);
+}
+
+/* Tags */
+.tag{
+  display:inline-block;
+  padding: 2px 8px;
+  border: 1px solid #7c92a8;
+  background: #e6f1fb;
+  border-radius: 10px;
+  text-decoration:none;
+  color: #2b5779;
+  font-family: var(--mono);
+  font-size: 12px;
+}
+.tag:hover{ background:#d6eafb; }
+
+/* Sidebar titles estilo “Sitely” */
+.side-title{
+  margin: 0 0 10px;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--ink);
+
+  background: linear-gradient(180deg, var(--bar), var(--bar2));
+  border: 1px solid var(--b1);
+  box-shadow: inset 1px 1px 0 var(--b2);
+  padding: 6px 10px;
+  border-radius: 10px;
+}
+
+/* --------- Formularios tipo Windows viejo --------- */
+.field{ display:flex; flex-direction:column; gap:6px; margin-bottom: 12px; }
+label{ font-family: var(--mono); font-size: 12px; color: var(--muted); }
+
+input, select, textarea{
+  font-family: var(--font);
+  font-size: 13px;
+  padding: 8px 8px;
+  background: #ffffff;
+  border: 1px solid var(--uiBorder);
+  border-radius: 8px;
+  outline: none;
+
+  box-shadow: inset 1px 1px 0 rgba(0,0,0,.05);
+}
+input:focus, select:focus, textarea:focus{
+  border-color: #3b7ea6;
+  box-shadow: 0 0 0 2px rgba(59,126,166,.18);
+}
+
+/* Botones 3D */
+.btnrow{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 8px; }
+
+button{
+  cursor:pointer;
+  font-family: var(--mono);
+  font-size: 12px;
+  padding: 7px 10px;
+
+  background: linear-gradient(180deg, #ffffff, var(--ui));
+  border: 1px solid var(--uiBorder);
+  border-radius: 10px;
+
+  box-shadow:
+    inset 1px 1px 0 var(--b2),
+    inset -1px -1px 0 rgba(0,0,0,.10);
+  color: var(--ink);
+}
+button:hover{ background: linear-gradient(180deg, #ffffff, var(--ui2)); }
+button:active{
+  box-shadow:
+    inset -1px -1px 0 var(--b2),
+    inset 1px 1px 0 rgba(0,0,0,.14);
+  transform: translateY(1px);
+}
+
+/* --------- Posts list --------- */
+.postlist{ display:flex; flex-direction:column; gap: 10px; margin-top: 8px; }
+.postitem{
+  padding: 10px 10px;
+  border: 1px solid var(--b3);
+  background: #f8fce8; /* fallback si tu editor se queja, cámbialo a #f8fce8 */
+  border-radius: 12px;
+}
+.postitem a{
+  font-size: 14px;
+  font-family: var(--mono);
+  color: var(--link2);
+  text-decoration:none;
+}
+.postitem a:hover{ text-decoration: underline; }
+.postitem .sub{ color: var(--muted); margin-top: 6px; }
+.postitem .small{
+  margin-top: 8px;
+  display:flex; flex-wrap:wrap; gap:8px;
+  align-items:center;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+/* --------- Imágenes/cover estilo “enmarcado” --------- */
+.home-hero,
+.posthero,
+.coverlink,
+.record-detail__cover,
+.record-cover{
+  border: 1px solid var(--b1);
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: inset 1px 1px 0 var(--b2);
+  overflow:hidden;
+}
+.home-hero{ margin: 10px 0 14px; padding: 8px; background: var(--box2); }
+.posthero{ margin: 12px 0 0; padding: 8px; background: var(--box2); }
+.coverlink{ display:block; margin: 10px 0; padding: 0; text-decoration:none; background: #fff; }
+
+.home-hero img,
+.posthero img{
+  display:block;
+  width:100%;
+  height:auto;
+}
+.postcover{
+  display:block;
+  width:100%;
+  height: 140px;
+  object-fit: cover;
+}
+
+/* --------- Código/pre --------- */
+article code{
+  font-family: var(--mono);
+  font-size: 12px;
+  background: #f0f7ff;
+  border: 1px solid #b6c9dd;
+  padding: 1px 4px;
+  border-radius: 6px;
+}
+pre{
+  overflow:auto;
+  padding: 10px;
+  background: #f0f7ff;
+  border: 1px solid #b6c9dd;
+  border-radius: 12px;
+}
+pre code{ background:none; border:none; padding:0; }
+
+/* --------- Discos (tu layout) --------- */
+.records-controls{
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+}
+@media (max-width: 920px){
+  .records-controls{ grid-template-columns: 1fr; }
+}
+.records-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+@media (max-width: 920px){
+  .records-grid{ grid-template-columns: 1fr; }
+}
+.record-card{
+  border: 1px solid var(--b1);
+  border-radius: 14px;
+  background: var(--box);
+  box-shadow: 0 6px 18px var(--shadow);
+  overflow:hidden;
+}
+.record-body{ padding: 10px 12px 12px; }
+.record-title a{ color: var(--link2); text-decoration:none; font-family: var(--mono); }
+.record-title a:hover{ text-decoration: underline; }
+.record-artist{ color: var(--muted); margin-top: 4px; }
+.record-score{
+  font-family: var(--mono);
+  font-size: 12px;
+  padding: 3px 8px;
+  border: 1px solid #9f8f55;
+  background: #f7edc8;
+  border-radius: 999px;
+  height: fit-content;
+}
+.rating{
+  margin-top: 10px;
+  height: 6px;
+  border: 1px solid var(--uiBorder);
+  background: #ffffff;
+  border-radius: 999px;
+  overflow:hidden;
+}
+.rating__fill{ height:100%; background: #6fb2d6; }
+
+.record-chips{ display:flex; flex-wrap:wrap; gap: 8px; margin-top: 10px; }
+.chip{
+  border: 1px solid #7c92a8;
+  background: #e6f1fb;
+  color: #2b5779;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 12px;
+}
+.chip--tag{
+  border-color: #9a6b9a;
+  background: #f1e2f1;
+  color: #6a2d6a;
+}
+.record-notes{
+  margin-top: 10px;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+/* --------- Footer --------- */
+footer{
+  margin-top: 14px;
+  padding: 10px 12px;
+  border: 1px solid var(--b1);
+  border-radius: 14px;
+  background: var(--box);
+  box-shadow: 0 6px 18px var(--shadow);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+.muted{ color: var(--muted); }
+
+/* ===== FIX: grid no estira el sidebar ===== */
+main{
+  align-items: start;     /* evita el "panel vacío" a la derecha */
+}
+section.panel,
+aside.panel{
+  align-self: start;
+}
+aside.panel{
+  height: fit-content;    /* el aside mide lo que mide su contenido */
+}
+
+/* ===== FIX: records grid más estable ===== */
+.records-grid{
+  grid-template-columns: repeat(2, minmax(0, 1fr)); /* evita overflow raro */
+}
+.record-card{
+  min-width: 0; /* clave para que el contenido pueda encogerse */
+}
+
+/* ===== FIX: portadas nunca gigantes ===== */
+.record-cover{
+  display: block;
+  overflow: hidden;
+}
+.record-cover img{
+  display:block;
+  width:100%;
+  height:160px;       /* fuerza “thumbnail” consistente */
+  object-fit: cover;
+}
+
+/* ===== FIX: vista detalle (si una portada se te va a tamaño infinito) ===== */
+.record-detail__cover img{
+  display:block;
+  width:100%;
+  max-height: 520px;  /* límite para pantallas grandes */
+  object-fit: contain; /* aquí conviene contain (se ve el disco completo) */
+}
+
+/* ==== FIX: más aire en la sección Discos ==== */
+.hr{
+  height: 0;
+  border-top: 1px solid rgba(0,0,0,.18);
+  margin: 14px 0 16px; /* separa controles de grilla */
+}
+
+.records-controls{
+  margin-bottom: 12px; /* aire antes de la grilla */
+  row-gap: 10px;
+}
+
+/* Dentro de cada card: separaciones */
+.rating{
+  margin: 12px 0 12px; /* entre el “7/10” y el escuchado */
+}
+
+.record-meta{
+  margin-top: 12px;
+}
+
+/* ===== Sidebar dock clásico (como fansites) ===== */
+main > aside.panel{
+  position: sticky;
+  top: 12px;
+  align-self: start;
+  height: fit-content;
+  max-height: calc(100vh - 24px);
+  overflow: auto;
+}
+
+/* En móvil se vuelve normal */
+@media (max-width: 920px){
+  main > aside.panel{
+    position: static;
+    top: auto;
+    max-height: none;
+    overflow: visible;
+  }
+}
+/* ===== Mobile polish ===== */
+@media (max-width: 920px){
+  .wrap{
+    width: calc(100% - 16px);
+    margin: 10px auto;
+  }
+
+  .brand .title{
+    font-size: 22px;
+    letter-spacing: 3px; /* en móvil 6px se ve muy separado */
+  }
+
+  nav{ gap: 8px; }
+  .navlink{ padding: 8px 10px; } /* mejor para dedo */
+
+  main{
+    padding: 10px;
+    gap: 12px;
+  }
+
+  .content{
+    padding: 12px 12px;
+  }
+
+  /* cards un poco más aireadas */
+  .record-body{ padding: 12px; }
+
+  /* inputs y botones más "tap friendly" */
+  input, select, textarea{
+    padding: 10px 10px;
+    font-size: 14px;
+  }
+  button{
+    padding: 9px 12px;
+    font-size: 13px;
+  }
+}
