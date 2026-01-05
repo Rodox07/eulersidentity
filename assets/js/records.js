@@ -1,7 +1,8 @@
 // js/records.js
 import { loadPosts, renderPostsSidebar } from "./posts.js";
 
-const RECORDS_URL = new URL("../assets/data/records.json", import.meta.url);
+const POSTS_URL = "/assets/data/records.json";
+
 
 function esc(s=""){return String(s).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#39;");}
 
@@ -147,3 +148,4 @@ export async function renderRecords({ mainEl, asideEl }) {
 
   apply();
 }
+
