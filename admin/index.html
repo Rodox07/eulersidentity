@@ -3,15 +3,25 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="robots" content="noindex" />
-  <title>RodoBlog — Admin</title>
-</head>
-
-<body>
-  <!-- Netlify Identity -->
+  <title>RodoBlog — Auth</title>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <style>
+    body{font-family:Tahoma,Arial,sans-serif; padding:20px}
+  </style>
+</head>
+<body>
+  <p>Procesando…</p>
 
-  <!-- Decap CMS -->
-  <script src="https://cdn.jsdelivr.net/npm/decap-cms@latest/dist/decap-cms.js"></script>
+  <script>
+    // abre el modal de netlify identity para completar recovery/invite
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", () => {
+        // Si viene con recovery_token o invite_token, abre el modal.
+        // El widget detecta el token desde la URL.
+        window.netlifyIdentity.open();
+      });
+      window.netlifyIdentity.init();
+    }
+  </script>
 </body>
 </html>
