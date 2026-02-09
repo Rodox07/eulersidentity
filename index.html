@@ -36,7 +36,6 @@
           <a class="navlink" href="#/">Inicio</a>
           <a class="navlink" href="#/projects">Proyectos</a>
           <a class="navlink" href="#/discos">Discos</a>
-          <a class="navlink" href="#/videos">Videos</a>
           <a class="navlink" href="#/about">Acerca</a>
           
         </nav>
@@ -85,19 +84,7 @@
     </footer>
   </div>
 
-  <script>
-(function () {
-  const h = location.hash || "";
-  // tokens de Netlify Identity usan hash, chocan con tu router "#/..."
-  if (/^#(invite_token|recovery_token|confirmation_token|access_token)=/.test(h)) {
-    location.replace("/auth/" + h);
-  }
-})();
-</script>
-
-
-<script type="module" src="./assets/js/app.js"></script>
-
+  <script type="module" src="./assets/js/app.js"></script>
 </body>
 </html>
 
